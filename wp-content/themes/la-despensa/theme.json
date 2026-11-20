@@ -1,0 +1,169 @@
+{
+	"$schema": "https://schemas.wp.org/wp/6.8/theme.json",
+	"version": 3,
+	"settings": {
+		"appearanceTools": true,
+		"useRootPaddingAwareAlignments": true,
+		"layout": {
+			"contentSize": "760px",
+			"wideSize": "1240px"
+		},
+		"color": {
+			"defaultPalette": false,
+			"defaultGradients": false,
+			"defaultDuotone": false,
+			"palette": [
+				{ "slug": "crema", "color": "#F7F1E6", "name": "Crema" },
+				{ "slug": "arena", "color": "#E8DCC8", "name": "Arena" },
+				{ "slug": "oliva", "color": "#4F5B45", "name": "Oliva" },
+				{ "slug": "oliva-oscuro", "color": "#3E4937", "name": "Oliva oscuro" },
+				{ "slug": "terracota", "color": "#A9502E", "name": "Terracota" },
+				{ "slug": "carbon", "color": "#2B2721", "name": "Carbón" },
+				{ "slug": "muted", "color": "#6E6456", "name": "Texto suave" },
+				{ "slug": "blanco", "color": "#FFFDF8", "name": "Blanco cálido" }
+			]
+		},
+		"typography": {
+			"defaultFontSizes": false,
+			"fluid": true,
+			"fontFamilies": [
+				{
+					"slug": "fraunces",
+					"name": "Fraunces",
+					"fontFamily": "\"Fraunces\", \"Iowan Old Style\", Georgia, serif",
+					"fontFace": [
+						{
+							"fontFamily": "Fraunces",
+							"fontStyle": "normal",
+							"fontWeight": "400 700",
+							"fontDisplay": "swap",
+							"src": ["file:./assets/fonts/fraunces-latin.woff2"]
+						}
+					]
+				},
+				{
+					"slug": "inter",
+					"name": "Inter",
+					"fontFamily": "\"Inter\", \"Helvetica Neue\", Arial, sans-serif",
+					"fontFace": [
+						{
+							"fontFamily": "Inter",
+							"fontStyle": "normal",
+							"fontWeight": "300 600",
+							"fontDisplay": "swap",
+							"src": ["file:./assets/fonts/inter-latin.woff2"]
+						}
+					]
+				}
+			],
+			"fontSizes": [
+				{ "slug": "small", "size": "0.8125rem", "name": "Pequeño", "fluid": false },
+				{ "slug": "medium", "size": "1rem", "name": "Base", "fluid": false },
+				{ "slug": "large", "size": "1.25rem", "name": "Grande", "fluid": false },
+				{ "slug": "x-large", "size": "clamp(1.5rem, 2.6vw, 2rem)", "name": "Extra grande" },
+				{ "slug": "display", "size": "clamp(2.6rem, 5vw, 4.4rem)", "name": "Display" }
+			]
+		},
+		"spacing": {
+			"units": ["px", "rem", "em", "vw", "%"],
+			"spacingSizes": [
+				{ "slug": "20", "size": "0.5rem", "name": "20" },
+				{ "slug": "30", "size": "1rem", "name": "30" },
+				{ "slug": "40", "size": "1.5rem", "name": "40" },
+				{ "slug": "50", "size": "2.5rem", "name": "50" },
+				{ "slug": "60", "size": "4rem", "name": "60" },
+				{ "slug": "70", "size": "6rem", "name": "70" },
+				{ "slug": "80", "size": "8rem", "name": "80" }
+			]
+		}
+	},
+	"styles": {
+		"color": {
+			"background": "var:preset|color|crema",
+			"text": "var:preset|color|carbon"
+		},
+		"typography": {
+			"fontFamily": "var:preset|font-family|inter",
+			"fontSize": "var:preset|font-size|medium",
+			"lineHeight": "1.65",
+			"fontWeight": "400"
+		},
+		"spacing": {
+			"blockGap": "1.25rem"
+		},
+		"elements": {
+			"heading": {
+				"color": { "text": "var:preset|color|carbon" },
+				"typography": {
+					"fontFamily": "var:preset|font-family|fraunces",
+					"fontWeight": "500",
+					"lineHeight": "1.08",
+					"letterSpacing": "-0.025em"
+				}
+			},
+			"h1": {
+				"typography": { "fontSize": "var:preset|font-size|display" }
+			},
+			"h2": {
+				"typography": { "fontSize": "var:preset|font-size|x-large" }
+			},
+			"h3": {
+				"typography": { "fontSize": "var:preset|font-size|large" }
+			},
+			"link": {
+				"color": { "text": "var:preset|color|oliva" },
+				"typography": { "textDecoration": "underline" },
+				":hover": {
+					"typography": { "textDecoration": "none" }
+				}
+			},
+			"button": {
+				"border": { "radius": "3px" },
+				"color": {
+					"background": "var:preset|color|oliva",
+					"text": "var:preset|color|crema"
+				},
+				"spacing": {
+					"padding": {
+						"top": "0.85rem",
+						"bottom": "0.85rem",
+						"left": "1.4rem",
+						"right": "1.4rem"
+					}
+				},
+				"typography": {
+					"fontFamily": "var:preset|font-family|inter",
+					"fontSize": "0.85rem",
+					"fontWeight": "500",
+					"letterSpacing": "0.02em"
+				},
+				":hover": {
+					"color": {
+						"background": "var:preset|color|oliva-oscuro",
+						"text": "var:preset|color|crema"
+					}
+				}
+			}
+		},
+		"blocks": {
+			"core/site-title": {
+				"typography": {
+					"fontFamily": "var:preset|font-family|fraunces",
+					"fontSize": "1.65rem",
+					"fontWeight": "600",
+					"letterSpacing": "-0.03em"
+				}
+			},
+			"core/navigation": {
+				"typography": {
+					"fontFamily": "var:preset|font-family|inter",
+					"fontSize": "0.78rem"
+				}
+			}
+		}
+	},
+	"templateParts": [
+		{ "name": "header", "title": "Encabezado", "area": "header" },
+		{ "name": "footer", "title": "Pie de página", "area": "footer" }
+	]
+}

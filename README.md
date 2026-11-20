@@ -12,7 +12,8 @@ Moneda CLP, idioma español, mercado Chile.
 - Etapa 1: configuración de WordPress y limpieza de contenido demo. Completada.
 - Etapa 2: WooCommerce y configuración regional. Completada.
 - Etapa 3: catálogo de productos. Completada.
-- Siguiente: Etapa 4, tema hijo e identidad visual.
+- Etapa 4: tema hijo e identidad visual. Completada.
+- Siguiente: Etapa 5, flujo de compra.
 
 ## Requisitos
 
@@ -68,7 +69,7 @@ contenedores y volúmenes, incluida la base de datos. Pide confirmación escrita
 │   └── generar-placeholders.sh    Imágenes demo con ImageMagick
 ├── assets/productos/              Imágenes fuente, versionadas
 ├── wp-content/               Bind mount versionado
-│   ├── themes/
+│   ├── themes/la-despensa/   Tema hijo, plantillas y estilos
 │   ├── plugins/
 │   ├── mu-plugins/
 │   └── uploads/              Ignorado por Git
@@ -120,6 +121,21 @@ Volúmenes nombrados:
 - Imágenes demo en `assets/productos/`, importadas a la biblioteca de medios.
   Son placeholders neutros; se pueden reemplazar por fotos reales usando el
   mismo nombre de archivo y volviendo a ejecutar `make catalogo`.
+
+## Diseño
+
+- Tema hijo `la-despensa` de Twenty Twenty-Five.
+- Paleta cálida: crema, arena, oliva, terracota y carbón.
+- Tipografías self-hosted: Fraunces para títulos, Inter para texto, precios y
+  botones. Archivos en `wp-content/themes/la-despensa/assets/fonts/`.
+- Plantillas propias: portada, encabezado, pie de página y 404.
+- Bloques dinámicos del tema para categorías, productos destacados, imagen de
+  portada y contador del carrito.
+- Encabezado fijo, menú móvil y contador de carrito que se actualiza tras
+  agregar o quitar productos.
+- Carrito y checkout usan los bloques de WooCommerce con estilos propios.
+  El checkout conserva el encabezado mínimo de WooCommerce.
+- Breakpoints revisados en 360, 390, 768, 1024 y 1440 px.
 
 ## Verificación
 
