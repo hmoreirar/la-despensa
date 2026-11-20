@@ -9,7 +9,8 @@ Moneda CLP, idioma español, mercado Chile.
 ## Estado
 
 - Etapa 0: infraestructura Docker y WordPress base. Completada.
-- Siguiente: Etapa 1, configuración de WordPress y limpieza de contenido demo.
+- Etapa 1: configuración de WordPress y limpieza de contenido demo. Completada.
+- Siguiente: Etapa 2, WooCommerce y configuración regional.
 
 ## Requisitos
 
