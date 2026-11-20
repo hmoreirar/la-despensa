@@ -46,6 +46,8 @@ services:
         define('WP_DEBUG_DISPLAY', false);
         define('SCRIPT_DEBUG', true);
         define('DISALLOW_FILE_EDIT', true);
+      MAILPIT_HOST: mailpit
+      MAILPIT_PORT: 1025
     volumes:
       - wp_data:/var/www/html
       - ./wp-content:/var/www/html/wp-content
@@ -78,12 +80,26 @@ services:
       WP_ADMIN_PASSWORD: ${WP_ADMIN_PASSWORD}
       WP_ADMIN_EMAIL: ${WP_ADMIN_EMAIL}
       TZ: ${TZ:-America/Santiago}
+      MAILPIT_HOST: mailpit
+      MAILPIT_PORT: 1025
     volumes:
       - wp_data:/var/www/html
       - ./wp-content:/var/www/html/wp-content
       - ./scripts:/scripts:ro
       - ./assets:/assets:ro
 
+  mailpit:
+    image: axllent/mailpit:v1.34.0
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8025:8025"
+    environment:
+      MP_DATABASE: /data/mailpit.db
+      MP_MAX_MESSAGES: 500
+    volumes:
+      - mailpit_data:/data
+
 volumes:
   db_data:
   wp_data:
+  mailpit_data:

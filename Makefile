@@ -2,7 +2,7 @@ SHELL := /bin/bash
 COMPOSE := docker compose
 WPCLI := $(COMPOSE) --profile tools run --rm wpcli
 
-.PHONY: help up down stop restart logs ps init woocommerce catalogo wp shell db-dump reset
+.PHONY: help up down stop restart logs ps init woocommerce catalogo checkout mail wp shell db-dump reset
 
 help:
 	@echo "La Despensa - comandos disponibles"
@@ -11,6 +11,8 @@ help:
 	@echo "  make init      Instala WordPress en español (idempotente)"
 	@echo "  make woocommerce  Instala y configura WooCommerce (idempotente)"
 	@echo "  make catalogo  Carga categorías, atributos y productos demo"
+	@echo "  make checkout  Configura pagos, cupones, correos y páginas legales"
+	@echo "  make mail      Muestra la URL de Mailpit"
 	@echo "  make down      Detiene y elimina contenedores (conserva datos)"
 	@echo "  make stop      Detiene contenedores sin eliminar"
 	@echo "  make logs      Sigue logs de todos los servicios"
@@ -36,6 +38,12 @@ woocommerce:
 
 catalogo:
 	$(WPCLI) eval-file /scripts/seed-catalogo.php
+
+checkout:
+	$(WPCLI) eval-file /scripts/configure-checkout.php
+
+mail:
+	@echo "Mailpit: http://localhost:8025"
 
 down:
 	$(COMPOSE) down

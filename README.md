@@ -13,7 +13,8 @@ Moneda CLP, idioma español, mercado Chile.
 - Etapa 2: WooCommerce y configuración regional. Completada.
 - Etapa 3: catálogo de productos. Completada.
 - Etapa 4: tema hijo e identidad visual. Completada.
-- Siguiente: Etapa 5, flujo de compra.
+- Etapa 5: flujo de compra, pagos de prueba y correos. Completada.
+- Siguiente: Etapa 6, personalización PHP con hooks.
 
 ## Requisitos
 
@@ -31,6 +32,7 @@ make up
 make init
 make woocommerce
 make catalogo
+make checkout
 ```
 
 Sitio: http://localhost:8080
@@ -48,11 +50,17 @@ make logs
 make wp ARGS="plugin list"
 make shell
 make db-dump
+make checkout
+make mail
 ```
 
-`make init`, `make woocommerce` y `make catalogo` son idempotentes: se pueden
-repetir sin duplicar configuración ni productos. `make reset` elimina
-contenedores y volúmenes, incluida la base de datos. Pide confirmación escrita.
+`make init`, `make woocommerce`, `make catalogo` y `make checkout` son
+idempotentes: se pueden repetir sin duplicar configuración ni productos.
+`make reset` elimina contenedores y volúmenes, incluida la base de datos.
+Pide confirmación escrita.
+
+Mailpit recibe todos los correos del sitio en http://localhost:8025.
+No se envía correo a direcciones reales en desarrollo.
 
 ## Estructura
 
@@ -65,6 +73,7 @@ contenedores y volúmenes, incluida la base de datos. Pide confirmación escrita
 ├── scripts/
 │   ├── init-wordpress.sh          Instalación base idempotente
 │   ├── configure-woocommerce.php  Moneda, impuestos, envíos y URLs
+│   ├── configure-checkout.php     Pagos, cupones, correos y legales
 │   ├── seed-catalogo.php          Categorías, atributos y productos
 │   └── generar-placeholders.sh    Imágenes demo con ImageMagick
 ├── assets/productos/              Imágenes fuente, versionadas
@@ -72,6 +81,7 @@ contenedores y volúmenes, incluida la base de datos. Pide confirmación escrita
 │   ├── themes/la-despensa/   Tema hijo, plantillas y estilos
 │   ├── plugins/
 │   ├── mu-plugins/
+│   │   └── dev-mailpit.php   SMTP local hacia Mailpit
 │   └── uploads/              Ignorado por Git
 ├── backups/                  Respaldos SQL, ignorados por Git
 ├── Makefile
@@ -136,6 +146,21 @@ Volúmenes nombrados:
 - Carrito y checkout usan los bloques de WooCommerce con estilos propios.
   El checkout conserva el encabezado mínimo de WooCommerce.
 - Breakpoints revisados en 360, 390, 768, 1024 y 1440 px.
+
+## Compra, pagos y correos
+
+- Pagos nativos de prueba:
+  - Transferencia bancaria: pedido queda `on-hold` hasta confirmar el pago.
+  - Pago contra entrega: pedido pasa a `processing`.
+- Cupones:
+  - `BIENVENIDA10`: 10% de descuento.
+  - `DESCUENTO2000`: $2.000 fijo.
+  - `ENVIOGRATIS`: envío sin costo.
+- Páginas publicadas: Política de privacidad, Términos y condiciones y
+  Política de devoluciones. Están enlazadas desde el footer y el checkout.
+- Correos transaccionales con Mailpit en http://localhost:8025.
+  El mu-plugin `dev-mailpit.php` desvía PHPMailer a SMTP local.
+- Pedidos de prueba 63 (contra entrega) y 64 (transferencia con cupón).
 
 ## Verificación
 

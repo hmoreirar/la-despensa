@@ -965,6 +965,10 @@ header.wp-block-template-part {
 	max-width: 1180px;
 }
 
+.wp-block-woocommerce-checkout-order-summary-block.checkout-order-summary-block-fill-wrapper {
+	display: none !important;
+}
+
 .woocommerce-checkout header.wp-block-template-part {
 	background: var(--ld-crema);
 	border-bottom: 1px solid var(--ld-line);
@@ -987,6 +991,11 @@ header.wp-block-template-part {
 .woocommerce-checkout .wp-block-post-content {
 	padding-top: clamp(1.5rem, 4vw, 3rem);
 	padding-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.woocommerce-order-received header.wp-block-template-part {
+	padding-left: 0 !important;
+	padding-right: 0 !important;
 }
 
 .wc-block-components-button:not(.wc-block-components-product-button__button) {

@@ -130,7 +130,7 @@ if (isset($methods['free_shipping'])) {
     $free_shipping = $methods['free_shipping'];
     $settings = $free_shipping->instance_settings;
     $settings['title'] = 'Envío gratis';
-    $settings['requires'] = 'min_amount';
+    $settings['requires'] = 'either';
     $settings['min_amount'] = '30000';
     update_option($free_shipping->get_instance_option_key(), $settings);
 }
