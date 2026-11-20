@@ -1,0 +1,22 @@
+# Secretos locales
+.env
+
+# WordPress: contenido generado
+wp-content/uploads/
+wp-content/upgrade/
+wp-content/languages/
+wp-content/cache/
+wp-content/debug.log
+wp-content/*.log
+
+# Respaldos
+backups/
+
+# Tema base incluido en la imagen de WordPress.
+# Se restaura al recrear el volumen wp_data.
+wp-content/themes/twentytwentyfive/
+
+# Herramientas y sistema
+.DS_Store
+Thumbs.db
+*.swp
