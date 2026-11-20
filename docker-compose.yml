@@ -82,6 +82,7 @@ services:
       - wp_data:/var/www/html
       - ./wp-content:/var/www/html/wp-content
       - ./scripts:/scripts:ro
+      - ./assets:/assets:ro
 
 volumes:
   db_data:

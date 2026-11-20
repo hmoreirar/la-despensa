@@ -36,6 +36,15 @@ update_option('woocommerce_specific_ship_to_countries', ['CL']);
 update_option('woocommerce_allow_tracking', 'no');
 update_option('woocommerce_coming_soon', 'no');
 
+// URLs en español.
+update_option('woocommerce_permalinks', [
+    'product_base' => 'producto',
+    'category_base' => 'categoria-producto',
+    'tag_base' => 'etiqueta-producto',
+    'attribute_base' => '',
+    'use_verbose_page_rules' => false,
+]);
+
 // Tasa de IVA 19% para Chile, aplicada también al envío.
 $existing_rates = WC_Tax::find_rates([
     'country' => 'CL',
@@ -91,22 +100,39 @@ foreach ($zone->get_shipping_methods() as $method) {
 }
 
 if (!isset($methods['flat_rate'])) {
-    $instance_id = $zone->add_shipping_method('flat_rate');
-    $method = WC_Shipping_Zones::get_shipping_method($instance_id);
-    $method->instance_settings['title'] = 'Envío a todo Chile';
-    $method->instance_settings['cost'] = '3990';
-    update_option($method->get_instance_option_key(), $method->instance_settings);
+    $zone->add_shipping_method('flat_rate');
+    $methods = [];
+    foreach ($zone->get_shipping_methods() as $method) {
+        $methods[$method->id] = $method;
+    }
     WP_CLI::log('Método tarifa plana creado.');
 }
 
+if (isset($methods['flat_rate'])) {
+    $flat_rate = $methods['flat_rate'];
+    $settings = $flat_rate->instance_settings;
+    $settings['title'] = 'Envío a todo Chile';
+    // 3.353 neto + IVA 19% = 3.990 final.
+    $settings['cost'] = '3353';
+    update_option($flat_rate->get_instance_option_key(), $settings);
+}
+
 if (!isset($methods['free_shipping'])) {
-    $instance_id = $zone->add_shipping_method('free_shipping');
-    $method = WC_Shipping_Zones::get_shipping_method($instance_id);
-    $method->instance_settings['title'] = 'Envío gratis';
-    $method->instance_settings['requires'] = 'min_amount';
-    $method->instance_settings['min_amount'] = '30000';
-    update_option($method->get_instance_option_key(), $method->instance_settings);
+    $zone->add_shipping_method('free_shipping');
+    $methods = [];
+    foreach ($zone->get_shipping_methods() as $method) {
+        $methods[$method->id] = $method;
+    }
     WP_CLI::log('Método envío gratis creado.');
+}
+
+if (isset($methods['free_shipping'])) {
+    $free_shipping = $methods['free_shipping'];
+    $settings = $free_shipping->instance_settings;
+    $settings['title'] = 'Envío gratis';
+    $settings['requires'] = 'min_amount';
+    $settings['min_amount'] = '30000';
+    update_option($free_shipping->get_instance_option_key(), $settings);
 }
 
 // Páginas de WooCommerce en español.

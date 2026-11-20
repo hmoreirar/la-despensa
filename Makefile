@@ -2,7 +2,7 @@ SHELL := /bin/bash
 COMPOSE := docker compose
 WPCLI := $(COMPOSE) --profile tools run --rm wpcli
 
-.PHONY: help up down stop restart logs ps init woocommerce wp shell db-dump reset
+.PHONY: help up down stop restart logs ps init woocommerce catalogo wp shell db-dump reset
 
 help:
 	@echo "La Despensa - comandos disponibles"
@@ -10,6 +10,7 @@ help:
 	@echo "  make up        Construye y levanta los servicios, espera healthchecks"
 	@echo "  make init      Instala WordPress en español (idempotente)"
 	@echo "  make woocommerce  Instala y configura WooCommerce (idempotente)"
+	@echo "  make catalogo  Carga categorías, atributos y productos demo"
 	@echo "  make down      Detiene y elimina contenedores (conserva datos)"
 	@echo "  make stop      Detiene contenedores sin eliminar"
 	@echo "  make logs      Sigue logs de todos los servicios"
@@ -32,6 +33,9 @@ woocommerce:
 		wp plugin is-active woocommerce || wp plugin activate woocommerce; \
 		wp language plugin is-installed woocommerce es_CL || wp language plugin install woocommerce es_CL; \
 		wp eval-file /scripts/configure-woocommerce.php'
+
+catalogo:
+	$(WPCLI) eval-file /scripts/seed-catalogo.php
 
 down:
 	$(COMPOSE) down

@@ -11,7 +11,8 @@ Moneda CLP, idioma español, mercado Chile.
 - Etapa 0: infraestructura Docker y WordPress base. Completada.
 - Etapa 1: configuración de WordPress y limpieza de contenido demo. Completada.
 - Etapa 2: WooCommerce y configuración regional. Completada.
-- Siguiente: Etapa 3, catálogo de productos.
+- Etapa 3: catálogo de productos. Completada.
+- Siguiente: Etapa 4, tema hijo e identidad visual.
 
 ## Requisitos
 
@@ -28,6 +29,7 @@ cp .env.example .env
 make up
 make init
 make woocommerce
+make catalogo
 ```
 
 Sitio: http://localhost:8080
@@ -47,9 +49,9 @@ make shell
 make db-dump
 ```
 
-`make init` y `make woocommerce` son idempotentes: se pueden repetir sin
-duplicar configuración. `make reset` elimina contenedores y volúmenes,
-incluida la base de datos. Pide confirmación escrita.
+`make init`, `make woocommerce` y `make catalogo` son idempotentes: se pueden
+repetir sin duplicar configuración ni productos. `make reset` elimina
+contenedores y volúmenes, incluida la base de datos. Pide confirmación escrita.
 
 ## Estructura
 
@@ -61,7 +63,10 @@ incluida la base de datos. Pide confirmación escrita.
 │   └── php/uploads.ini       Límites de subida de PHP
 ├── scripts/
 │   ├── init-wordpress.sh          Instalación base idempotente
-│   └── configure-woocommerce.php  Moneda, impuestos, envíos y páginas
+│   ├── configure-woocommerce.php  Moneda, impuestos, envíos y URLs
+│   ├── seed-catalogo.php          Categorías, atributos y productos
+│   └── generar-placeholders.sh    Imágenes demo con ImageMagick
+├── assets/productos/              Imágenes fuente, versionadas
 ├── wp-content/               Bind mount versionado
 │   ├── themes/
 │   ├── plugins/
@@ -97,9 +102,24 @@ Volúmenes nombrados:
 - Moneda: CLP, 0 decimales, formato `$ 1.990`.
 - Impuestos: IVA 19% incluido en el precio, aplicado también al envío.
 - Envío: zona única Chile, tarifa plana $3.990, gratis desde $30.000.
+  WooCommerce ingresa el costo del envío sin IVA: la tarifa se guarda como
+  $3.353 neto y el cliente paga $3.990 final.
 - Páginas: Tienda, Carrito, Finalizar compra, Mi cuenta.
 - Carrito y checkout usan bloques nativos de WooCommerce.
 - Sin seguimiento de uso (`woocommerce_allow_tracking=no`).
+
+## Catálogo
+
+- 16 productos: 13 simples y 3 variables.
+- 5 categorías: Aceites y condimentos, Mermeladas y conservas, Café y té,
+  Productos artesanales, Panadería y repostería.
+- Atributos globales: Tamaño y Sabor.
+- Inventario activo en todos los productos, umbral de stock bajo en 5.
+- SKU con prefijo `LD-` y variantes por tamaño o sabor.
+- URLs: `/producto/<slug>/` y `/categoria-producto/<slug>/`.
+- Imágenes demo en `assets/productos/`, importadas a la biblioteca de medios.
+  Son placeholders neutros; se pueden reemplazar por fotos reales usando el
+  mismo nombre de archivo y volviendo a ejecutar `make catalogo`.
 
 ## Verificación
 
