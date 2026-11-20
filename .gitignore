@@ -16,6 +16,9 @@ backups/
 # Se restaura al recrear el volumen wp_data.
 wp-content/themes/twentytwentyfive/
 
+# Plugins de terceros instalados con WP-CLI.
+wp-content/plugins/woocommerce/
+
 # Herramientas y sistema
 .DS_Store
 Thumbs.db

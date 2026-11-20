@@ -30,6 +30,10 @@ if [ "$(wp option get WPLANG)" != "es_CL" ]; then
   wp site switch-language es_CL
 fi
 
+if ! wp language theme is-installed twentytwentyfive es_CL 2>/dev/null; then
+  wp language theme install twentytwentyfive es_CL
+fi
+
 # Regionalizacion
 wp option update timezone_string America/Santiago
 wp option update date_format 'd-m-Y'

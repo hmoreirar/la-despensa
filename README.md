@@ -10,7 +10,8 @@ Moneda CLP, idioma español, mercado Chile.
 
 - Etapa 0: infraestructura Docker y WordPress base. Completada.
 - Etapa 1: configuración de WordPress y limpieza de contenido demo. Completada.
-- Siguiente: Etapa 2, WooCommerce y configuración regional.
+- Etapa 2: WooCommerce y configuración regional. Completada.
+- Siguiente: Etapa 3, catálogo de productos.
 
 ## Requisitos
 
@@ -26,6 +27,7 @@ cp .env.example .env
 # Edita .env con tus propias contraseñas
 make up
 make init
+make woocommerce
 ```
 
 Sitio: http://localhost:8080
@@ -45,8 +47,9 @@ make shell
 make db-dump
 ```
 
-`make reset` elimina contenedores y volúmenes, incluida la base de datos.
-Pide confirmación escrita.
+`make init` y `make woocommerce` son idempotentes: se pueden repetir sin
+duplicar configuración. `make reset` elimina contenedores y volúmenes,
+incluida la base de datos. Pide confirmación escrita.
 
 ## Estructura
 
@@ -57,7 +60,8 @@ Pide confirmación escrita.
 │   ├── wordpress/Dockerfile  Remapea www-data al UID/GID del host
 │   └── php/uploads.ini       Límites de subida de PHP
 ├── scripts/
-│   └── init-wordpress.sh     Instalación idempotente con WP-CLI
+│   ├── init-wordpress.sh          Instalación base idempotente
+│   └── configure-woocommerce.php  Moneda, impuestos, envíos y páginas
 ├── wp-content/               Bind mount versionado
 │   ├── themes/
 │   ├── plugins/
@@ -83,8 +87,19 @@ Volúmenes nombrados:
 - Imagen propia de WordPress para que los archivos creados por Apache
   pertenezcan al usuario del host. Evita problemas de permisos en uploads.
 - WP-CLI en contenedor aparte, perfil `tools`. No se instala nada en el host.
-- Un solo plugin por ahora: WooCommerce se agrega en la etapa 2.
+- WooCommerce es el único plugin, instalado con WP-CLI. El directorio del
+  plugin no se versiona; `make woocommerce` lo reinstala.
 - `WP_DEBUG` activo con log en `wp-content/debug.log`.
+
+## Configuración de WooCommerce
+
+- País de tienda: Chile. Venta y envío solo a Chile.
+- Moneda: CLP, 0 decimales, formato `$ 1.990`.
+- Impuestos: IVA 19% incluido en el precio, aplicado también al envío.
+- Envío: zona única Chile, tarifa plana $3.990, gratis desde $30.000.
+- Páginas: Tienda, Carrito, Finalizar compra, Mi cuenta.
+- Carrito y checkout usan bloques nativos de WooCommerce.
+- Sin seguimiento de uso (`woocommerce_allow_tracking=no`).
 
 ## Verificación
 
