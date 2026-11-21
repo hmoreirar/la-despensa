@@ -15,7 +15,8 @@ Moneda CLP, idioma español, mercado Chile.
 - Etapa 4: tema hijo e identidad visual. Completada.
 - Etapa 5: flujo de compra, pagos de prueba y correos. Completada.
 - Etapa 6: personalización PHP de checkout y carrito. Completada.
-- Siguiente: Etapa 7, pruebas y documentación final.
+- Etapa 7: pruebas y documentación final. Completada.
+- Proyecto completo en entorno local.
 
 ## Requisitos
 
@@ -189,6 +190,42 @@ curl -I http://localhost:8080
 make wp ARGS="core version"
 make wp ARGS="option get WPLANG"
 ```
+
+## Pruebas realizadas
+
+| Área | Resultado |
+|---|---|
+| Catálogo | 16 productos, 7 variaciones, 5 categorías |
+| Precios e IVA | CLP sin decimales, IVA 19% incluido |
+| Stock | Inventario descontado por pedido |
+| Cupones | 10%, monto fijo y envío gratis |
+| Envío | Tarifa plana y gratis desde $30.000 |
+| Envío gratis | Tarifa plana se elimina al calificar |
+| Checkout | RUT validado, pagos y términos |
+| Pagos | Transferencia y contra entrega |
+| Pedidos | 63, 64 y 67 conservados como demo |
+| Correos | 8 mensajes recibidos en Mailpit |
+| Legal | Privacidad, términos y devoluciones publicadas |
+| Enlaces internos | 43 revisados, sin errores 4xx |
+| Responsive | 360, 390, 768, 1024 y 1440 sin overflow |
+| Teclado | Menú móvil abre con Enter y cierra con Escape |
+| 404 | Página propia publicada |
+| Respaldo | `make db-dump` genera SQL con 48 tablas |
+| Consola | Sin errores de JavaScript |
+| `debug.log` | Sin errores ni avisos |
+
+No se ejecutó `make reset` ni una instalación desde cero. Los pedidos de
+prueba se conservan como datos de demostración.
+
+## Limitaciones
+
+- Las imágenes de producto son placeholders; la generación con IA quedó
+  pendiente por saldo del proveedor.
+- Los pagos son métodos de prueba. No hay integración con Webpay ni pasarela
+  real.
+- Mailpit captura los correos en local; no se envían a direcciones reales.
+- No hay integración con transportistas ni cálculo de envío por comuna.
+- El sitio está configurado con `blog_public=0` para desarrollo.
 
 ## Etapas
 
