@@ -2,13 +2,14 @@ SHELL := /bin/bash
 COMPOSE := docker compose
 WPCLI := $(COMPOSE) --profile tools run --rm wpcli
 
-.PHONY: help up down stop restart logs ps init woocommerce catalogo checkout mail wp shell db-dump reset
+.PHONY: help up down stop restart logs ps init tema woocommerce catalogo checkout mail wp shell db-dump reset
 
 help:
 	@echo "La Despensa - comandos disponibles"
 	@echo ""
 	@echo "  make up        Construye y levanta los servicios, espera healthchecks"
 	@echo "  make init      Instala WordPress en español (idempotente)"
+	@echo "  make tema      Activa el tema hijo La Despensa"
 	@echo "  make woocommerce  Instala y configura WooCommerce (idempotente)"
 	@echo "  make catalogo  Carga categorías, atributos y productos demo"
 	@echo "  make checkout  Configura pagos, cupones, correos y páginas legales"
@@ -28,6 +29,9 @@ up:
 init:
 	$(COMPOSE) up -d --build --wait
 	$(COMPOSE) --profile tools run --rm --entrypoint sh wpcli /scripts/init-wordpress.sh
+
+tema:
+	$(WPCLI) theme activate la-despensa
 
 woocommerce:
 	$(COMPOSE) --profile tools run --rm --entrypoint sh wpcli -c '\

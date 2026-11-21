@@ -5,6 +5,18 @@
 
 defined('ABSPATH') || exit;
 
+require_once get_stylesheet_directory() . '/inc/checkout.php';
+
+/**
+ * El tema usa su propio enlace de carrito; se evita el mini-carrito automático.
+ */
+add_filter('hooked_block_types', function (array $hooked_blocks): array {
+    return array_values(array_filter(
+        $hooked_blocks,
+        static fn (string $block): bool => $block !== 'woocommerce/mini-cart'
+    ));
+});
+
 add_action('wp_enqueue_scripts', function (): void {
     $stylesheet = get_stylesheet_directory() . '/style.css';
     $dependencies = wp_style_is('twentytwentyfive-style', 'registered')

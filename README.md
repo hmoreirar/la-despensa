@@ -14,7 +14,8 @@ Moneda CLP, idioma español, mercado Chile.
 - Etapa 3: catálogo de productos. Completada.
 - Etapa 4: tema hijo e identidad visual. Completada.
 - Etapa 5: flujo de compra, pagos de prueba y correos. Completada.
-- Siguiente: Etapa 6, personalización PHP con hooks.
+- Etapa 6: personalización PHP de checkout y carrito. Completada.
+- Siguiente: Etapa 7, pruebas y documentación final.
 
 ## Requisitos
 
@@ -30,6 +31,7 @@ cp .env.example .env
 # Edita .env con tus propias contraseñas
 make up
 make init
+make tema
 make woocommerce
 make catalogo
 make checkout
@@ -54,8 +56,8 @@ make checkout
 make mail
 ```
 
-`make init`, `make woocommerce`, `make catalogo` y `make checkout` son
-idempotentes: se pueden repetir sin duplicar configuración ni productos.
+`make init`, `make tema`, `make woocommerce`, `make catalogo` y `make checkout`
+son idempotentes: se pueden repetir sin duplicar configuración ni productos.
 `make reset` elimina contenedores y volúmenes, incluida la base de datos.
 Pide confirmación escrita.
 
@@ -79,6 +81,8 @@ No se envía correo a direcciones reales en desarrollo.
 ├── assets/productos/              Imágenes fuente, versionadas
 ├── wp-content/               Bind mount versionado
 │   ├── themes/la-despensa/   Tema hijo, plantillas y estilos
+│   │   ├── inc/checkout.php  RUT y aviso de envío gratis
+│   │   └── assets/js/        Contador y progreso de carrito
 │   ├── plugins/
 │   ├── mu-plugins/
 │   │   └── dev-mailpit.php   SMTP local hacia Mailpit
@@ -160,7 +164,23 @@ Volúmenes nombrados:
   Política de devoluciones. Están enlazadas desde el footer y el checkout.
 - Correos transaccionales con Mailpit en http://localhost:8025.
   El mu-plugin `dev-mailpit.php` desvía PHPMailer a SMTP local.
-- Pedidos de prueba 63 (contra entrega) y 64 (transferencia con cupón).
+- Pedidos de prueba 63 (contra entrega), 64 (transferencia con cupón) y
+  67 (contra entrega con RUT).
+
+## Personalización de checkout
+
+- Campo RUT obligatorio en el checkout por bloques, registrado con
+  `woocommerce_register_additional_checkout_field`.
+- Normalización y validación de RUT chileno con módulo 11.
+- El RUT queda en el pedido, se ve en la confirmación, en el admin y en los
+  correos transaccionales.
+- Aviso de envío gratis en el carrito con barra de progreso.
+  Se actualiza por AJAX al cambiar cantidades.
+- Al alcanzar el mínimo o usar el cupón `ENVIOGRATIS`, se elimina la tarifa
+  plana y queda solo envío gratis.
+- Hooks usados: `woocommerce_register_additional_checkout_field`,
+  `woocommerce_package_rates`, `render_block`, `wp_ajax_*` y
+  `woocommerce_admin_order_data_after_billing_address`.
 
 ## Verificación
 
