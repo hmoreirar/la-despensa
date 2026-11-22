@@ -133,9 +133,10 @@ Volúmenes nombrados:
 - Inventario activo en todos los productos, umbral de stock bajo en 5.
 - SKU con prefijo `LD-` y variantes por tamaño o sabor.
 - URLs: `/producto/<slug>/` y `/categoria-producto/<slug>/`.
-- Imágenes demo en `assets/productos/`, importadas a la biblioteca de medios.
-  Son placeholders neutros; se pueden reemplazar por fotos reales usando el
-  mismo nombre de archivo y volviendo a ejecutar `make catalogo`.
+- Imágenes en `assets/productos/`, importadas a la biblioteca de medios.
+  Son fotografías de Unsplash con licencia libre; créditos en
+  `assets/productos/CREDITS.md`. Se pueden reemplazar usando el mismo nombre
+  de archivo y volviendo a ejecutar `make catalogo`.
 
 ## Diseño
 
@@ -196,6 +197,7 @@ make wp ARGS="option get WPLANG"
 | Área | Resultado |
 |---|---|
 | Catálogo | 16 productos, 7 variaciones, 5 categorías |
+| Imágenes | 16 fotos importadas y asignadas |
 | Precios e IVA | CLP sin decimales, IVA 19% incluido |
 | Stock | Inventario descontado por pedido |
 | Cupones | 10%, monto fijo y envío gratis |
@@ -219,8 +221,8 @@ prueba se conservan como datos de demostración.
 
 ## Limitaciones
 
-- Las imágenes de producto son placeholders; la generación con IA quedó
-  pendiente por saldo del proveedor.
+- Las fotografías vienen de Unsplash y no representan exactamente los
+  productos ficticios.
 - Los pagos son métodos de prueba. No hay integración con Webpay ni pasarela
   real.
 - Mailpit captura los correos en local; no se envían a direcciones reales.

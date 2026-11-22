@@ -77,21 +77,26 @@ function ld_ensure_attribute(string $name, string $slug, array $terms): int
 
 function ld_assign_image(WC_Product $product, string $sku): void
 {
-    $source = null;
+    $candidates = [];
 
     foreach (['jpg', 'jpeg', 'png', 'webp'] as $extension) {
         $candidate = "/assets/productos/{$sku}.{$extension}";
 
         if (file_exists($candidate)) {
-            $source = $candidate;
-            break;
+            $candidates[] = $candidate;
         }
     }
 
-    if (!$source) {
+    if (empty($candidates)) {
         WP_CLI::warning("Sin imagen para {$sku}.");
         return;
     }
+
+    usort($candidates, static function (string $left, string $right): int {
+        return filemtime($right) <=> filemtime($left);
+    });
+
+    $source = $candidates[0];
 
     $hash = md5_file($source);
     $existing = get_posts([
