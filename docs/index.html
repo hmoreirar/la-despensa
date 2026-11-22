@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>La Despensa — Caso de estudio WordPress + WooCommerce</title>
+	<meta name="description" content="Caso de estudio de una tienda gastronómica chilena desarrollada con WordPress, WooCommerce, PHP, MariaDB y Docker.">
+	<meta property="og:title" content="La Despensa — Caso de estudio">
+	<meta property="og:description" content="E-commerce gastronómico chileno con WordPress, WooCommerce, Docker y un tema propio.">
+	<meta property="og:type" content="website">
+	<meta property="og:image" content="https://hmoreirar.github.io/la-despensa/capturas/hero-1440.webp">
+	<meta name="theme-color" content="#F7F1E6">
+	<link rel="icon" href="favicon.svg" type="image/svg+xml">
+	<link rel="canonical" href="https://hmoreirar.github.io/la-despensa/">
+	<link rel="preload" href="assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+	<link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+	<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+	<a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+	<header class="site-header">
+		<div class="site-header__inner">
+			<a class="wordmark" href="./">La Despensa</a>
+			<nav class="site-nav" aria-label="Secciones">
+				<a href="#proyecto">Proyecto</a>
+				<a href="#interfaz">Interfaz</a>
+				<a href="#decisiones">Decisiones</a>
+				<a class="site-nav__repo" href="https://github.com/hmoreirar/la-despensa">GitHub</a>
+			</nav>
+		</div>
+	</header>
+
+	<main id="contenido">
+		<section class="hero">
+			<div class="shell hero__grid">
+				<div class="hero__copy">
+					<h1>Una despensa chilena, de la idea al checkout.</h1>
+					<p class="hero__lead">Tienda de productos gastronómicos con WordPress, WooCommerce y Docker. Catálogo, checkout con RUT, envío gratis, pagos de prueba y un tema propio.</p>
+					<p class="hero__meta">Caso de estudio · WordPress + WooCommerce · 2026</p>
+					<div class="hero__actions">
+						<a class="button" href="https://github.com/hmoreirar/la-despensa">Ver repositorio</a>
+						<a class="button button--ghost" href="https://github.com/hmoreirar/la-despensa#readme">Leer README</a>
+					</div>
+				</div>
+				<figure class="hero__media">
+					<picture>
+						<source media="(max-width: 700px)" srcset="capturas/hero-390.webp">
+						<img src="capturas/hero-1440.webp" width="1440" height="1000" alt="Portada de La Despensa con el hero, la imagen de aceite de oliva y los productos destacados.">
+					</picture>
+					<figcaption>Portada · escritorio 1440 px</figcaption>
+				</figure>
+			</div>
+		</section>
+
+		<section class="section" id="proyecto">
+			<div class="shell section__grid">
+				<div>
+					<h2>El proyecto</h2>
+					<p>La Despensa es una tienda ficticia de alimentos chilenos: aceites, conservas, café, té, artesanías y panadería. El objetivo fue construir el recorrido completo de compra y entender WooCommerce desde dentro, no solo desde el panel.</p>
+					<p>El proyecto cubre infraestructura, catálogo, impuestos, envíos, cupones, pagos de prueba, correos transaccionales, diseño responsive y personalizaciones PHP sobre el checkout por bloques.</p>
+				</div>
+				<dl class="facts">
+					<div><dt>Productos</dt><dd>16, en 5 categorías</dd></div>
+					<div><dt>Stack</dt><dd>WordPress · WooCommerce · PHP · MariaDB</dd></div>
+					<div><dt>Infraestructura</dt><dd>Docker Compose · WP-CLI</dd></div>
+					<div><dt>Mercado</dt><dd>Chile · CLP · IVA 19%</dd></div>
+					<div><dt>Pagos</dt><dd>Transferencia y contra entrega</dd></div>
+					<div><dt>Estado</dt><dd>Demo local funcional</dd></div>
+				</dl>
+			</div>
+		</section>
+
+		<section class="section" id="interfaz">
+			<div class="shell">
+				<div class="section__head">
+					<h2>Interfaz</h2>
+					<p>Diseño propio, sin frameworks CSS. Tipografía Fraunces e Inter, paleta cálida y foco en la legibilidad del catálogo.</p>
+				</div>
+
+				<figure class="shot shot--wide">
+					<img src="capturas/tienda-1440.webp" width="1440" height="1000" loading="lazy" alt="Tienda con grilla de productos, filtros de orden y tarjetas de producto.">
+					<figcaption>Tienda · catálogo y grilla de productos</figcaption>
+				</figure>
+
+				<div class="shots-grid">
+					<figure class="shot">
+						<img src="capturas/producto-1440.webp" width="1440" height="1000" loading="lazy" alt="Ficha de producto con galería, precio, variaciones y compra.">
+						<figcaption>Ficha de producto</figcaption>
+					</figure>
+					<figure class="shot">
+						<img src="capturas/carrito-1440.webp" width="1440" height="1000" loading="lazy" alt="Carrito con producto, cupones, envío y total.">
+						<figcaption>Carrito</figcaption>
+					</figure>
+					<figure class="shot">
+						<img src="capturas/checkout-1440.webp" width="1440" height="1000" loading="lazy" alt="Checkout con RUT, dirección, envío y métodos de pago.">
+						<figcaption>Checkout</figcaption>
+					</figure>
+					<figure class="shot">
+						<img src="capturas/pedido-1440.webp" width="1440" height="1800" loading="lazy" alt="Confirmación de pedido con dirección, descuento y datos bancarios.">
+						<figcaption>Confirmación de pedido</figcaption>
+					</figure>
+					<figure class="shot">
+						<img src="capturas/admin-pedido-1440.webp" width="1440" height="1000" loading="lazy" alt="Edición de pedido en WooCommerce con RUT y detalle de productos.">
+						<figcaption>Admin de WooCommerce</figcaption>
+					</figure>
+					<figure class="shot">
+						<img src="capturas/mailpit-1440.webp" width="1440" height="1000" loading="lazy" alt="Bandeja de Mailpit con correos de pedidos y pagos.">
+						<figcaption>Correos transaccionales en Mailpit</figcaption>
+					</figure>
+				</div>
+
+				<div class="phones">
+					<figure class="phone">
+						<img src="capturas/portada-390.webp" width="390" height="844" loading="lazy" alt="Portada móvil de La Despensa.">
+						<figcaption>Portada</figcaption>
+					</figure>
+					<figure class="phone">
+						<img src="capturas/tienda-390.webp" width="390" height="844" loading="lazy" alt="Tienda móvil de La Despensa.">
+						<figcaption>Tienda</figcaption>
+					</figure>
+					<figure class="phone">
+						<img src="capturas/producto-390.webp" width="390" height="844" loading="lazy" alt="Ficha de producto móvil de La Despensa.">
+						<figcaption>Producto</figcaption>
+					</figure>
+					<figure class="phone">
+						<img src="capturas/checkout-390.webp" width="390" height="844" loading="lazy" alt="Checkout móvil de La Despensa.">
+						<figcaption>Checkout</figcaption>
+					</figure>
+				</div>
+			</div>
+		</section>
+
+		<section class="section section--olive" id="alcance">
+			<div class="shell">
+				<h2>Qué resuelve</h2>
+				<div class="features">
+					<article>
+						<h3>Infraestructura reproducible</h3>
+						<p>Docker Compose con WordPress, MariaDB, WP-CLI y Mailpit. Scripts idempotentes para instalar, configurar y sembrar el catálogo.</p>
+					</article>
+					<article>
+						<h3>Catálogo real</h3>
+						<p>Productos simples y variables, atributos globales, inventario, SKU, categorías, impuestos y envíos.</p>
+					</article>
+					<article>
+						<h3>Checkout chileno</h3>
+						<p>RUT obligatorio con validación de módulo 11 sobre la API de campos adicionales del checkout por bloques.</p>
+					</article>
+					<article>
+						<h3>Envío gratis dinámico</h3>
+						<p>Aviso con barra de progreso que se actualiza por AJAX y elimina la tarifa plana al alcanzar el mínimo o usar cupón.</p>
+					</article>
+					<article>
+						<h3>Compra completa</h3>
+						<p>Cupones, pago contra entrega, transferencia, correos transaccionales y descuento de stock por pedido.</p>
+					</article>
+					<article>
+						<h3>Diseño y performance</h3>
+						<p>Tema hijo, fuentes locales, imágenes WebP, `srcset`, `sizes`, precarga del hero y revisión responsive.</p>
+					</article>
+				</div>
+			</div>
+		</section>
+
+		<section class="section" id="decisiones">
+			<div class="shell">
+				<div class="section__head">
+					<h2>Decisiones técnicas</h2>
+					<p>Las partes que más aprendizaje dejaron.</p>
+				</div>
+				<dl class="decisions">
+					<div>
+						<dt>Docker con permisos del host</dt>
+						<dd>La imagen remapea <code>www-data</code> al UID/GID del usuario. El core vive en un volumen; <code>wp-content</code> en bind mount para editarlo y versionarlo.</dd>
+					</div>
+					<div>
+						<dt>Checkout por bloques</dt>
+						<dd>El RUT se registra con <code>woocommerce_register_additional_checkout_field</code>. <code>woocommerce_checkout_fields</code> ya no aplica al checkout de bloques.</dd>
+					</div>
+					<div>
+						<dt>IVA y envío</dt>
+						<dd>Precios con IVA incluido. WooCommerce ingresa el envío sin impuesto: la tarifa se guarda en $3.353 neto para que el cliente pague $3.990 final.</dd>
+					</div>
+					<div>
+						<dt>Imágenes y LCP</dt>
+						<dd>16 fuentes WebP de 1024 px, 80 derivados, <code>srcset</code> y <code>sizes</code> explícitos, más precarga del hero con <code>imagesrcset</code>.</dd>
+					</div>
+					<div>
+						<dt>Correo local</dt>
+						<dd>Un mu-plugin intercepta PHPMailer y lo envía a Mailpit. Cero correos reales durante el desarrollo.</dd>
+					</div>
+					<div>
+						<dt>Tema hijo y hooks</dt>
+						<dd>Plantillas de bloques, <code>theme.json</code>, shortcodes convertidos a bloques dinámicos y JavaScript para el contador del carrito.</dd>
+					</div>
+				</dl>
+			</div>
+		</section>
+
+		<section class="section section--results" id="resultados">
+			<div class="shell">
+				<div class="section__head">
+					<h2>Resultados</h2>
+					<p>Mediciones locales después de la optimización.</p>
+				</div>
+				<div class="results">
+					<div><strong>16</strong><span>productos con imagen</span></div>
+					<div><strong>451 KB</strong><span>peso de portada</span></div>
+					<div><strong>555 KB</strong><span>peso de tienda</span></div>
+					<div><strong>904 ms</strong><span>LCP de portada</span></div>
+					<div><strong>0</strong><span>errores en consola</span></div>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<footer class="site-footer">
+		<div class="shell site-footer__inner">
+			<div>
+				<p class="site-footer__mark">La Despensa</p>
+				<p class="site-footer__note">Proyecto de portafolio. Marca y productos ficticios. La demo corre localmente con Docker.</p>
+			</div>
+			<ul class="site-footer__links">
+				<li><a href="https://github.com/hmoreirar/la-despensa">Repositorio</a></li>
+				<li><a href="https://github.com/hmoreirar/la-despensa#readme">README</a></li>
+				<li><a href="https://github.com/hmoreirar/la-despensa/blob/main/LICENSE">Licencia MIT</a></li>
+				<li><a href="https://github.com/hmoreirar/la-despensa/blob/main/assets/productos/CREDITS.md">Créditos de fotos</a></li>
+			</ul>
+		</div>
+	</footer>
+</body>
+</html>

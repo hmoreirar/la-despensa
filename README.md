@@ -6,6 +6,8 @@ Tienda ficticia de productos chilenos: aceites y condimentos, mermeladas y
 conservas, café y té, productos artesanales, panadería y repostería.
 Moneda CLP, idioma español, mercado Chile.
 
+[Caso de estudio](https://hmoreirar.github.io/la-despensa/) · [Repositorio](https://github.com/hmoreirar/la-despensa)
+
 ## Ficha del proyecto
 
 | | |
