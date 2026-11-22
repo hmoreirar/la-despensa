@@ -6,30 +6,191 @@ Tienda ficticia de productos chilenos: aceites y condimentos, mermeladas y
 conservas, café y té, productos artesanales, panadería y repostería.
 Moneda CLP, idioma español, mercado Chile.
 
-## Estado
+## Ficha del proyecto
 
-- Etapa 0: infraestructura Docker y WordPress base. Completada.
-- Etapa 1: configuración de WordPress y limpieza de contenido demo. Completada.
-- Etapa 2: WooCommerce y configuración regional. Completada.
-- Etapa 3: catálogo de productos. Completada.
-- Etapa 4: tema hijo e identidad visual. Completada.
-- Etapa 5: flujo de compra, pagos de prueba y correos. Completada.
-- Etapa 6: personalización PHP de checkout y carrito. Completada.
-- Etapa 7: pruebas y documentación final. Completada.
-- Proyecto completo en entorno local.
+| | |
+|---|---|
+| Tipo | Tienda e-commerce de demostración |
+| Rol | Diseño, desarrollo, infraestructura y pruebas |
+| Stack | WordPress, WooCommerce, PHP, MariaDB, Docker |
+| Estado | Demo local funcional |
+| Código | MIT |
+| Fotografías | Unsplash License |
+| Tipografías | SIL Open Font License |
 
-## Requisitos
+## Vista general
+
+<img src="docs/capturas/portada-1440.webp" width="720" alt="Portada de La Despensa en escritorio">
+
+## Qué demuestra
+
+- Infraestructura reproducible con Docker Compose, MariaDB y WP-CLI.
+- Catálogo con productos simples, variables, atributos, stock e imágenes.
+- Configuración regional chilena: CLP, IVA incluido y envío nacional.
+- Cupones, métodos de pago de prueba y correos transaccionales locales.
+- Checkout por bloques con campo RUT validado en servidor.
+- Tema hijo propio, mobile first y sin frameworks CSS externos.
+- Personalizaciones PHP mediante hooks y filtros.
+- Optimización de imágenes WebP, `srcset`, `sizes` y precarga del hero.
+
+## Capturas
+
+| Escritorio | Móvil |
+|:---:|:---:|
+| <img src="docs/capturas/portada-1440.webp" width="620" alt="Portada escritorio"> | <img src="docs/capturas/portada-390.webp" width="210" alt="Portada móvil"> |
+| <img src="docs/capturas/tienda-1440.webp" width="620" alt="Tienda escritorio"> | <img src="docs/capturas/tienda-390.webp" width="210" alt="Tienda móvil"> |
+| <img src="docs/capturas/producto-1440.webp" width="620" alt="Ficha de producto escritorio"> | <img src="docs/capturas/producto-390.webp" width="210" alt="Ficha de producto móvil"> |
+| <img src="docs/capturas/carrito-1440.webp" width="620" alt="Carrito escritorio"> | <img src="docs/capturas/carrito-390.webp" width="210" alt="Carrito móvil"> |
+| <img src="docs/capturas/checkout-1440.webp" width="620" alt="Checkout escritorio"> | <img src="docs/capturas/checkout-390.webp" width="210" alt="Checkout móvil"> |
+
+### Pedido y administración
+
+| Confirmación | Admin del pedido |
+|:---:|:---:|
+| <img src="docs/capturas/pedido-1440.webp" width="620" alt="Pedido recibido"> | <img src="docs/capturas/admin-pedido-1440.webp" width="620" alt="Edición de pedido en WooCommerce"> |
+
+### Correos transaccionales
+
+<img src="docs/capturas/mailpit-1440.webp" width="720" alt="Bandeja de Mailpit con correos de pedidos">
+
+## Recorrido de compra
+
+1. El cliente entra a la tienda y elige un producto simple o variable.
+2. Agrega al carrito; el contador del header se actualiza sin recargar.
+3. El carrito muestra el aviso de envío gratis y su barra de progreso.
+4. En checkout completa sus datos, RUT y dirección.
+5. Elige transferencia bancaria o pago contra entrega.
+6. Al confirmar, WooCommerce crea el pedido, descuenta stock y envía correos.
+7. El pedido queda `on-hold` para transferencia o `processing` para contra
+   entrega.
+
+## Stack
+
+- WordPress 7.1.5.
+- WooCommerce 11.3.1.
+- PHP 8.4 sobre Apache.
+- MariaDB 11.8 LTS.
+- Docker Compose.
+- WP-CLI.
+- Tema hijo de Twenty Twenty-Five.
+- HTML, CSS y JavaScript sin framework.
+
+## Funcionalidades
+
+### Infraestructura
+
+- Servicios `db`, `wordpress`, `wpcli` y `mailpit`.
+- Volúmenes para base de datos, core y Mailpit.
+- `wp-content` en bind mount para edición y control de versiones.
+- Imagen de WordPress con UID/GID del host para evitar problemas de permisos.
+- Configuración idempotente con `make init`, `make tema`, `make woocommerce`,
+  `make catalogo` y `make checkout`.
+
+### WooCommerce
+
+- País Chile, venta y envío solo a Chile.
+- CLP sin decimales, formato `$ 1.990`.
+- IVA 19% incluido en precios y aplicado al envío.
+- Zona de envío Chile con tarifa plana y envío gratis desde $30.000.
+- 16 productos: 13 simples y 3 variables.
+- 5 categorías, atributos globales Tamaño y Sabor, stock y SKU.
+- Cupones `BIENVENIDA10`, `DESCUENTO2000` y `ENVIOGRATIS`.
+- Transferencia bancaria y pago contra entrega.
+
+### Diseño
+
+- Paleta crema, arena, oliva, terracota y carbón.
+- Fraunces para títulos, Inter para texto, precios y botones.
+- Fuentes self-hosted, sin Google Fonts en tiempo de ejecución.
+- Portada, tienda, ficha, carrito, checkout, cuenta y 404 propias.
+- Header fijo, menú móvil y cuenta de usuario.
+- Breakpoints revisados en 360, 390, 768, 1024 y 1440 px.
+
+### Personalización
+
+- RUT obligatorio en checkout, normalizado y validado con módulo 11.
+- Campo registrado con `woocommerce_register_additional_checkout_field`.
+- El RUT queda en el pedido y se ve en confirmación, admin y correos.
+- Aviso de envío gratis con AJAX al cambiar cantidades.
+- Al calificar, se elimina la tarifa plana y queda solo envío gratis.
+- Bloques dinámicos del tema para categorías, destacados, hero y carrito.
+- Contador de carrito actualizado tras agregar o quitar productos.
+
+### Correos
+
+- Mailpit en http://localhost:8025 captura todos los correos.
+- Mu-plugin `dev-mailpit.php` desvía PHPMailer a SMTP local.
+- Correos de pedido nuevo y confirmación al cliente.
+- Sin envío a direcciones reales en desarrollo.
+
+## Arquitectura
+
+```
+.
+├── docker-compose.yml
+├── docker/
+│   ├── wordpress/Dockerfile
+│   └── php/uploads.ini
+├── scripts/
+│   ├── init-wordpress.sh
+│   ├── configure-woocommerce.php
+│   ├── configure-checkout.php
+│   ├── seed-catalogo.php
+│   └── generar-placeholders.sh
+├── assets/productos/              Fuentes WebP y créditos
+├── docs/capturas/                 Capturas del portafolio
+├── wp-content/
+│   ├── themes/la-despensa/
+│   │   ├── inc/checkout.php
+│   │   ├── assets/fonts/
+│   │   ├── assets/js/
+│   │   ├── parts/
+│   │   ├── templates/
+│   │   ├── functions.php
+│   │   ├── style.css
+│   │   └── theme.json
+│   ├── mu-plugins/dev-mailpit.php
+│   └── uploads/                   Ignorado por Git
+├── backups/                       Ignorado por Git
+├── Makefile
+├── LICENSE
+└── .env.example
+```
+
+Volúmenes:
+
+- `db_data`: MariaDB.
+- `wp_data`: core de WordPress y `wp-config.php`.
+- `mailpit_data`: mensajes de correo locales.
+
+## Decisiones técnicas
+
+- **Docker desde el host:** no se instala PHP, Composer ni WP-CLI en la máquina.
+- **Imagen propia de WordPress:** `www-data` usa el UID/GID del host para que
+  uploads y archivos del tema sean editables sin `sudo`.
+- **Core en volumen, `wp-content` en bind mount:** el repositorio versiona solo
+  lo propio del proyecto.
+- **WooCommerce como único plugin:** se instala con WP-CLI y no se versiona.
+- **Envío con IVA:** WooCommerce ingresa costos de envío netos. La tarifa se
+  guarda en $3.353 para que el cliente pague $3.990 final.
+- **Checkout por bloques:** el RUT usa la API moderna de campos adicionales,
+  no `woocommerce_checkout_fields`.
+- **WebP directo:** sin plugin de optimización; WordPress genera los tamaños
+  derivados y el navegador elige con `srcset` y `sizes`.
+- **Hero precargado:** `link rel="preload"` con `imagesrcset` reduce el LCP.
+- **Correo local:** PHPMailer se intercepta por hook, sin plugin SMTP.
+
+## Cómo ejecutar
+
+Requisitos:
 
 - Docker Engine y Docker Compose v2 o superior.
 - Git.
 - Puerto 8080 libre.
-- No se requiere PHP, Composer ni WP-CLI en el host.
-
-## Arranque
 
 ```bash
 cp .env.example .env
-# Edita .env con tus propias contraseñas
+# Edita .env con contraseñas propias
 make up
 make init
 make tema
@@ -38,10 +199,15 @@ make catalogo
 make checkout
 ```
 
-Sitio: http://localhost:8080
-Panel: http://localhost:8080/wp-admin
+Accesos:
 
-El usuario y la contraseña del administrador están en `.env`
+```
+Sitio:    http://localhost:8080
+Panel:    http://localhost:8080/wp-admin
+Mailpit:  http://localhost:8025
+```
+
+El usuario y la contraseña del admin están en `.env`
 (`WP_ADMIN_USER`, `WP_ADMIN_PASSWORD`). `.env` no se versiona.
 
 ## Comandos
@@ -55,192 +221,62 @@ make shell
 make db-dump
 make checkout
 make mail
+make reset
 ```
 
-`make init`, `make tema`, `make woocommerce`, `make catalogo` y `make checkout`
-son idempotentes: se pueden repetir sin duplicar configuración ni productos.
-`make reset` elimina contenedores y volúmenes, incluida la base de datos.
-Pide confirmación escrita.
+`make reset` elimina contenedores y volúmenes. Pide confirmación escrita.
 
-Mailpit recibe todos los correos del sitio en http://localhost:8025.
-No se envía correo a direcciones reales en desarrollo.
+## Datos demo
 
-## Estructura
-
-```
-.
-├── docker-compose.yml        Servicios db, wordpress y wpcli
-├── docker/
-│   ├── wordpress/Dockerfile  Remapea www-data al UID/GID del host
-│   └── php/uploads.ini       Límites de subida de PHP
-├── scripts/
-│   ├── init-wordpress.sh          Instalación base idempotente
-│   ├── configure-woocommerce.php  Moneda, impuestos, envíos y URLs
-│   ├── configure-checkout.php     Pagos, cupones, correos y legales
-│   ├── seed-catalogo.php          Categorías, atributos y productos
-│   └── generar-placeholders.sh    Imágenes demo con ImageMagick
-├── assets/productos/              Imágenes fuente, versionadas
-├── wp-content/               Bind mount versionado
-│   ├── themes/la-despensa/   Tema hijo, plantillas y estilos
-│   │   ├── inc/checkout.php  RUT y aviso de envío gratis
-│   │   └── assets/js/        Contador y progreso de carrito
-│   ├── plugins/
-│   ├── mu-plugins/
-│   │   └── dev-mailpit.php   SMTP local hacia Mailpit
-│   └── uploads/              Ignorado por Git
-├── backups/                  Respaldos SQL, ignorados por Git
-├── Makefile
-├── .env.example
-└── docker-compose.yml
-```
-
-Volúmenes nombrados:
-
-- `db_data`: datos de MariaDB.
-- `wp_data`: core de WordPress y `wp-config.php`.
-
-`wp-content` vive en el host para editarlo con tu editor y versionarlo con Git.
-
-## Decisiones técnicas
-
-- WordPress 7.1.5 sobre PHP 8.4 Apache.
-- MariaDB 11.8 LTS.
-- Imagen propia de WordPress para que los archivos creados por Apache
-  pertenezcan al usuario del host. Evita problemas de permisos en uploads.
-- WP-CLI en contenedor aparte, perfil `tools`. No se instala nada en el host.
-- WooCommerce es el único plugin, instalado con WP-CLI. El directorio del
-  plugin no se versiona; `make woocommerce` lo reinstala.
-- `WP_DEBUG` activo con log en `wp-content/debug.log`.
-
-## Configuración de WooCommerce
-
-- País de tienda: Chile. Venta y envío solo a Chile.
-- Moneda: CLP, 0 decimales, formato `$ 1.990`.
-- Impuestos: IVA 19% incluido en el precio, aplicado también al envío.
-- Envío: zona única Chile, tarifa plana $3.990, gratis desde $30.000.
-  WooCommerce ingresa el costo del envío sin IVA: la tarifa se guarda como
-  $3.353 neto y el cliente paga $3.990 final.
-- Páginas: Tienda, Carrito, Finalizar compra, Mi cuenta.
-- Carrito y checkout usan bloques nativos de WooCommerce.
-- Sin seguimiento de uso (`woocommerce_allow_tracking=no`).
-
-## Catálogo
-
-- 16 productos: 13 simples y 3 variables.
-- 5 categorías: Aceites y condimentos, Mermeladas y conservas, Café y té,
-  Productos artesanales, Panadería y repostería.
-- Atributos globales: Tamaño y Sabor.
-- Inventario activo en todos los productos, umbral de stock bajo en 5.
-- SKU con prefijo `LD-` y variantes por tamaño o sabor.
-- URLs: `/producto/<slug>/` y `/categoria-producto/<slug>/`.
-- Imágenes en `assets/productos/`, en WebP e importadas a la biblioteca de
-  medios. Son fotografías de Unsplash con licencia libre; créditos en
-  `assets/productos/CREDITS.md`.
-
-## Diseño
-
-- Tema hijo `la-despensa` de Twenty Twenty-Five.
-- Paleta cálida: crema, arena, oliva, terracota y carbón.
-- Tipografías self-hosted: Fraunces para títulos, Inter para texto, precios y
-  botones. Archivos en `wp-content/themes/la-despensa/assets/fonts/`.
-- Plantillas propias: portada, encabezado, pie de página y 404.
-- Bloques dinámicos del tema para categorías, productos destacados, imagen de
-  portada y contador del carrito.
-- Encabezado fijo, menú móvil y contador de carrito que se actualiza tras
-  agregar o quitar productos.
-- Carrito y checkout usan los bloques de WooCommerce con estilos propios.
-  El checkout conserva el encabezado mínimo de WooCommerce.
-- Breakpoints revisados en 360, 390, 768, 1024 y 1440 px.
-
-## Optimización de imágenes
-
-- 16 fotos WebP de 1024x1024, calidad 78.
-- `sizes` explícito en tarjetas y hero.
-- Precarga de la imagen principal en la portada con `imagesrcset` y
-  `fetchpriority="high"`.
-- Sin plugin de optimización ni CDN externo.
-- Portada: 560 KB a 451 KB; imágenes de 261 KB a 152 KB.
-- Tienda: 1026 KB a 555 KB.
-- LCP local medido: 904 ms en portada y 956 ms en tienda.
-- Se reemplazaron las fotos de café molido, queque de manjar y alfajores por
-  imágenes más cercanas al producto.
-
-## Compra, pagos y correos
-
-- Pagos nativos de prueba:
-  - Transferencia bancaria: pedido queda `on-hold` hasta confirmar el pago.
-  - Pago contra entrega: pedido pasa a `processing`.
-- Cupones:
-  - `BIENVENIDA10`: 10% de descuento.
-  - `DESCUENTO2000`: $2.000 fijo.
-  - `ENVIOGRATIS`: envío sin costo.
-- Páginas publicadas: Política de privacidad, Términos y condiciones y
-  Política de devoluciones. Están enlazadas desde el footer y el checkout.
-- Correos transaccionales con Mailpit en http://localhost:8025.
-  El mu-plugin `dev-mailpit.php` desvía PHPMailer a SMTP local.
-- Pedidos de prueba 63 (contra entrega), 64 (transferencia con cupón) y
-  67 (contra entrega con RUT).
-
-## Personalización de checkout
-
-- Campo RUT obligatorio en el checkout por bloques, registrado con
-  `woocommerce_register_additional_checkout_field`.
-- Normalización y validación de RUT chileno con módulo 11.
-- El RUT queda en el pedido, se ve en la confirmación, en el admin y en los
-  correos transaccionales.
-- Aviso de envío gratis en el carrito con barra de progreso.
-  Se actualiza por AJAX al cambiar cantidades.
-- Al alcanzar el mínimo o usar el cupón `ENVIOGRATIS`, se elimina la tarifa
-  plana y queda solo envío gratis.
-- Hooks usados: `woocommerce_register_additional_checkout_field`,
-  `woocommerce_package_rates`, `render_block`, `wp_ajax_*` y
-  `woocommerce_admin_order_data_after_billing_address`.
-
-## Verificación
-
-```bash
-curl -I http://localhost:8080
-make wp ARGS="core version"
-make wp ARGS="option get WPLANG"
-```
+- Pedido 63: pago contra entrega, $6.480.
+- Pedido 64: transferencia bancaria con cupón, $6.231.
+- Pedido 67: pago contra entrega con RUT, $6.480.
+- Los pedidos tienen una nota interna que los identifica como demostración.
+- Stock de Sal de mar: 27 unidades.
+- Mailpit conserva los correos de prueba.
 
 ## Pruebas realizadas
 
 | Área | Resultado |
 |---|---|
 | Catálogo | 16 productos, 7 variaciones, 5 categorías |
-| Imágenes | 16 fotos WebP importadas y asignadas |
+| Imágenes | 16 fotos WebP y 80 tamaños derivados |
 | Peso | Portada 451 KB, tienda 555 KB |
 | Precios e IVA | CLP sin decimales, IVA 19% incluido |
-| Stock | Inventario descontado por pedido |
+| Stock | Descontado por pedido |
 | Cupones | 10%, monto fijo y envío gratis |
 | Envío | Tarifa plana y gratis desde $30.000 |
-| Envío gratis | Tarifa plana se elimina al calificar |
 | Checkout | RUT validado, pagos y términos |
 | Pagos | Transferencia y contra entrega |
-| Pedidos | 63, 64 y 67 conservados como demo |
-| Correos | 8 mensajes recibidos en Mailpit |
-| Legal | Privacidad, términos y devoluciones publicadas |
+| Correos | 8 mensajes en Mailpit |
+| Legal | Privacidad, términos y devoluciones |
 | Enlaces internos | 43 revisados, sin errores 4xx |
 | Responsive | 360, 390, 768, 1024 y 1440 sin overflow |
 | Teclado | Menú móvil abre con Enter y cierra con Escape |
 | 404 | Página propia publicada |
-| Respaldo | `make db-dump` genera SQL con 48 tablas |
-| Consola | Sin errores de JavaScript |
+| Respaldo | SQL con 48 tablas |
+| Consola | Sin errores JavaScript |
 | `debug.log` | Sin errores ni avisos |
-
-No se ejecutó `make reset` ni una instalación desde cero. Los pedidos de
-prueba se conservan como datos de demostración.
+| LCP local | 904 ms portada, 956 ms tienda |
 
 ## Limitaciones
 
-- Las fotografías vienen de Unsplash y no representan exactamente los
-  productos ficticios.
-- Los pagos son métodos de prueba. No hay integración con Webpay ni pasarela
-  real.
-- Mailpit captura los correos en local; no se envían a direcciones reales.
-- No hay integración con transportistas ni cálculo de envío por comuna.
-- El sitio está configurado con `blog_public=0` para desarrollo.
+- Fotografías de Unsplash; no representan exactamente los productos ficticios.
+- Pagos de prueba: no hay Webpay, Mercado Pago ni pasarela real.
+- Mailpit no entrega correos a direcciones reales.
+- Sin integración con transportistas ni cálculo por comuna.
+- `blog_public=0`: el sitio no se indexa.
+- No se validó una instalación desde cero en esta máquina.
+
+## Licencias
+
+- Código del proyecto: MIT, ver `LICENSE`.
+- Fotografías: Unsplash License, créditos en
+  `assets/productos/CREDITS.md`.
+- Fraunces e Inter: SIL Open Font License, archivos en
+  `wp-content/themes/la-despensa/assets/fonts/`.
+- WordPress y WooCommerce: GPL.
+- La marca, los productos y los textos de La Despensa son ficticios.
 
 ## Etapas
 
@@ -249,6 +285,6 @@ prueba se conservan como datos de demostración.
 2. WooCommerce y configuración regional.
 3. Catálogo de productos.
 4. Tema hijo e identidad visual.
-5. Flujo de compra.
-6. Personalización PHP con hooks.
-7. Pruebas y documentación final.
+5. Flujo de compra, pagos y correos.
+6. Personalización PHP de checkout y carrito.
+7. Pruebas, optimización y portafolio.

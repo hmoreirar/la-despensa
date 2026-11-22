@@ -104,17 +104,6 @@ add_action('woocommerce_init', function (): void {
     ]);
 });
 
-add_action('woocommerce_admin_order_data_after_billing_address', function ($order): void {
-    $rut = (string) $order->get_meta('_wc_other/ladespensa/rut');
-
-    if ($rut === '') {
-        return;
-    }
-
-    echo '<p><strong>' . esc_html__('RUT', 'la-despensa') . ':</strong> '
-        . esc_html(ld_format_rut($rut)) . '</p>';
-});
-
 function ld_free_shipping_threshold(): float
 {
     return (float) apply_filters('ladespensa_free_shipping_threshold', 30000);
