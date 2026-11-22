@@ -133,10 +133,9 @@ Volúmenes nombrados:
 - Inventario activo en todos los productos, umbral de stock bajo en 5.
 - SKU con prefijo `LD-` y variantes por tamaño o sabor.
 - URLs: `/producto/<slug>/` y `/categoria-producto/<slug>/`.
-- Imágenes en `assets/productos/`, importadas a la biblioteca de medios.
-  Son fotografías de Unsplash con licencia libre; créditos en
-  `assets/productos/CREDITS.md`. Se pueden reemplazar usando el mismo nombre
-  de archivo y volviendo a ejecutar `make catalogo`.
+- Imágenes en `assets/productos/`, en WebP e importadas a la biblioteca de
+  medios. Son fotografías de Unsplash con licencia libre; créditos en
+  `assets/productos/CREDITS.md`.
 
 ## Diseño
 
@@ -152,6 +151,19 @@ Volúmenes nombrados:
 - Carrito y checkout usan los bloques de WooCommerce con estilos propios.
   El checkout conserva el encabezado mínimo de WooCommerce.
 - Breakpoints revisados en 360, 390, 768, 1024 y 1440 px.
+
+## Optimización de imágenes
+
+- 16 fotos WebP de 1024x1024, calidad 78.
+- `sizes` explícito en tarjetas y hero.
+- Precarga de la imagen principal en la portada con `imagesrcset` y
+  `fetchpriority="high"`.
+- Sin plugin de optimización ni CDN externo.
+- Portada: 560 KB a 451 KB; imágenes de 261 KB a 152 KB.
+- Tienda: 1026 KB a 555 KB.
+- LCP local medido: 904 ms en portada y 956 ms en tienda.
+- Se reemplazaron las fotos de café molido, queque de manjar y alfajores por
+  imágenes más cercanas al producto.
 
 ## Compra, pagos y correos
 
@@ -197,7 +209,8 @@ make wp ARGS="option get WPLANG"
 | Área | Resultado |
 |---|---|
 | Catálogo | 16 productos, 7 variaciones, 5 categorías |
-| Imágenes | 16 fotos importadas y asignadas |
+| Imágenes | 16 fotos WebP importadas y asignadas |
+| Peso | Portada 451 KB, tienda 555 KB |
 | Precios e IVA | CLP sin decimales, IVA 19% incluido |
 | Stock | Inventario descontado por pedido |
 | Cupones | 10%, monto fijo y envío gratis |

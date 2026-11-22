@@ -11,7 +11,7 @@ El catálogo, los productos y la marca son ficticios.
 | LD-MERM-001 | https://images.unsplash.com/photo-1645871306587-bebaa2f1dfc0 |
 | LD-CON-001 | https://images.unsplash.com/photo-1610135373101-89aeeab8fa50 |
 | LD-CAF-001 | https://images.unsplash.com/photo-1562051036-e0eea191d42f |
-| LD-CAF-002 | https://images.unsplash.com/photo-1511920170033-f8396924c348 |
+| LD-CAF-002 | https://images.unsplash.com/photo-1695245503558-5cdb37f49092 |
 | LD-TE-001 | https://images.unsplash.com/photo-1604697976842-d36fa5a1b2ed |
 | LD-INF-001 | https://images.unsplash.com/photo-1563822249548-9a72b6353cd1 |
 | LD-ART-001 | https://images.unsplash.com/photo-1552740844-4f8a8206c68d |
@@ -19,5 +19,5 @@ El catálogo, los productos y la marca son ficticios.
 | LD-ART-003 | https://images.unsplash.com/photo-1580151820172-ae6491498c54 |
 | LD-PAN-001 | https://images.unsplash.com/photo-1767065888377-e5ffb4e39645 |
 | LD-PAN-002 | https://images.unsplash.com/photo-1757451628318-af04456154e7 |
-| LD-PAN-003 | https://images.unsplash.com/photo-1702744382319-20efefc9dc19 |
-| LD-PAN-004 | https://images.unsplash.com/photo-1611755308542-23d69842bc30 |
+| LD-PAN-003 | https://images.unsplash.com/photo-1624000961428-eeece184988b |
+| LD-PAN-004 | https://images.unsplash.com/photo-1517400847543-fd27a32c8d12 |

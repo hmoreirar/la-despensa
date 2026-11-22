@@ -30,7 +30,7 @@ while IFS='|' read -r sku category name; do
     -gravity center -geometry +0+15 -composite \
     -font "$FONT" -fill '#8B7C66' -pointsize 22 -kerning 6 \
     -gravity south -annotate +0+96 "LA DESPENSA" \
-    -quality 88 "$OUT/$sku.jpg"
+    -quality 85 -define webp:method=6 "$OUT/$sku.webp"
 
   echo "placeholder: $sku"
 done <<'DATA'

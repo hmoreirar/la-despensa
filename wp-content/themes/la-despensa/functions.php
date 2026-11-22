@@ -186,7 +186,11 @@ function ld_featured_products_html(): string
 
         $output .= '<li class="ld-product">';
         $output .= '<a class="ld-product__media" href="' . esc_url($permalink) . '">';
-        $output .= $product->get_image('large', ['class' => 'ld-product__img', 'loading' => 'lazy']);
+        $output .= $product->get_image('large', [
+            'class' => 'ld-product__img',
+            'loading' => 'lazy',
+            'sizes' => '(max-width: 360px) 100vw, (max-width: 600px) 50vw, (max-width: 1024px) 33vw, 25vw',
+        ]);
 
         if (!$product->is_in_stock()) {
             $output .= '<span class="ld-product__badge">' . esc_html__('Agotado', 'la-despensa') . '</span>';
@@ -245,6 +249,7 @@ function ld_product_image_html(array $attributes): string
         'loading' => 'eager',
         'fetchpriority' => 'high',
         'decoding' => 'async',
+        'sizes' => '(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 440px',
     ]);
 
     $caption = $attributes['caption'] ?: $product->get_name();
@@ -254,4 +259,35 @@ function ld_product_image_html(array $attributes): string
 }
 
 add_shortcode('ld_imagen_producto', 'ld_product_image_html');
+
+/**
+ * Precarga la imagen del hero para mejorar LCP en la portada.
+ */
+add_action('wp_head', function (): void {
+    if (!is_front_page() || !function_exists('wc_get_product_id_by_sku')) {
+        return;
+    }
+
+    $product_id = wc_get_product_id_by_sku('LD-ACE-001');
+    $product = $product_id ? wc_get_product($product_id) : null;
+    $image_id = $product ? $product->get_image_id() : 0;
+
+    if (!$image_id) {
+        return;
+    }
+
+    $src = wp_get_attachment_image_src($image_id, 'large');
+    $srcset = wp_get_attachment_image_srcset($image_id, 'large');
+
+    if (!$src) {
+        return;
+    }
+
+    printf(
+        '<link rel="preload" as="image" href="%s" imagesrcset="%s" imagesizes="%s" fetchpriority="high">' . "\n",
+        esc_url($src[0]),
+        esc_attr($srcset ?: $src[0]),
+        esc_attr('(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 440px')
+    );
+}, 2);
 

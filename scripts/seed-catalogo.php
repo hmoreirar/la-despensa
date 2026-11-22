@@ -79,7 +79,7 @@ function ld_assign_image(WC_Product $product, string $sku): void
 {
     $candidates = [];
 
-    foreach (['jpg', 'jpeg', 'png', 'webp'] as $extension) {
+    foreach (['webp', 'jpg', 'jpeg', 'png'] as $extension) {
         $candidate = "/assets/productos/{$sku}.{$extension}";
 
         if (file_exists($candidate)) {
